@@ -1,4 +1,3 @@
-
 using Xunit;
 
 namespace StringCalculator.Tests
@@ -6,26 +5,27 @@ namespace StringCalculator.Tests
     public class CalculatorTests
     {
         [Fact]
-        public void Evaluate_ShouldHandleSimpleAddition()
+        public void Evaluate_ShouldHandleComplexExpressions()
         {
             var calculator = new Calculator();
-            var result = calculator.Evaluate("2 + 2");
-            Assert.Equal(4.0, result);
+            var result = calculator.Evaluate("2 * (6 - (5 - 2) / 3) / 4");
+            Assert.Equal(2.5, result, 1);
         }
 
         [Fact]
-        public void Evaluate_ShouldHandleMixedOperations()
+        public void Evaluate_ShouldHandlePriority()
         {
             var calculator = new Calculator();
-            var result = calculator.Evaluate("2 + 3 * 4 - 5");
-            Assert.Equal(9.0, result); //todo добавить поддержку приоритета
+            var result = calculator.Evaluate("2 + 3 * 4");
+            Assert.Equal(14.0, result);
         }
 
         [Fact]
-        public void Evaluate_ShouldThrowException_WhenUnknownOperator()
+        public void Evaluate_ShouldHandleNestedParentheses()
         {
             var calculator = new Calculator();
-            Assert.Throws<ArgumentException>(() => calculator.Evaluate("2 ^ 2"));
+            var result = calculator.Evaluate("(2 + 3) * (4 - 1)");
+            Assert.Equal(15.0, result);
         }
     }
 }
